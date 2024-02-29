@@ -70,10 +70,10 @@ resource "aws_cloudwatch_event_target" "ecs_scheduled_task" {
   arn            = var.ecs_cluster_arn
   input          = var.event_target_input
   input_path     = var.event_target_input_path
-  launch_type    = var.event_target_capacity_provider_strategy == null ? "FARGATE" : null
   role_arn       = aws_cloudwatch_event_rule.event_rule.role_arn
   ecs_target {
     group                     = var.event_target_ecs_target_group
+    launch_type               = var.event_target_capacity_provider_strategy == null ? "FARGATE" : null
     platform_version          = var.event_target_ecs_target_platform_version
     task_count                = var.event_target_ecs_target_task_count
     task_definition_arn       = var.event_target_ecs_target_task_definition_arn
