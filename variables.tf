@@ -141,6 +141,7 @@ variable "permissions_boundary" {
 }
 
 variable "event_target_capacity_provider_strategy" {
-  type        = object
+  description = "Capacity provider strategies to use for the target."
+  type        = any
   default     = null
 }
