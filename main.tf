@@ -78,7 +78,15 @@ resource "aws_cloudwatch_event_target" "ecs_scheduled_task" {
     task_count                = var.event_target_ecs_target_task_count
     task_definition_arn       = var.event_target_ecs_target_task_definition_arn
     propagate_tags            = var.event_target_ecs_target_propagate_tags == "" ? null : var.event_target_ecs_target_propagate_tags
-    capacity_provider_strategy= var.event_target_capacity_provider_strategy
+    dynamic "capacity_provider_strategy" {
+      for_each = var.event_target_capacity_provider_strategy != null ? [1] :[]
+      content {
+            base              = var.event_target_capacity_provider_strategy.base
+            weight            = var.event_target_capacity_provider_strategy.weight
+            capacity_provider = var.event_target_capacity_provider_strategy.capacity_provider
+      }
+    }
+    
     network_configuration {
       subnets                 = var.event_target_ecs_target_subnets
       security_groups         = var.event_target_ecs_target_security_groups
