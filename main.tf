@@ -70,22 +70,22 @@ resource "aws_cloudwatch_event_target" "ecs_scheduled_task" {
   arn            = var.ecs_cluster_arn
   input          = var.event_target_input
   input_path     = var.event_target_input_path
+  launch_type    = var.event_target_capacity_provider_strategy == null ? "FARGATE" : null
   role_arn       = aws_cloudwatch_event_rule.event_rule.role_arn
   ecs_target {
-    group               = var.event_target_ecs_target_group
-    launch_type         = "FARGATE"
-    platform_version    = var.event_target_ecs_target_platform_version
-    task_count          = var.event_target_ecs_target_task_count
-    task_definition_arn = var.event_target_ecs_target_task_definition_arn
-    propagate_tags      = var.event_target_ecs_target_propagate_tags == "" ? null : var.event_target_ecs_target_propagate_tags
-
+    group                     = var.event_target_ecs_target_group
+    platform_version          = var.event_target_ecs_target_platform_version
+    task_count                = var.event_target_ecs_target_task_count
+    task_definition_arn       = var.event_target_ecs_target_task_definition_arn
+    propagate_tags            = var.event_target_ecs_target_propagate_tags == "" ? null : var.event_target_ecs_target_propagate_tags
+    capacity_provider_strategy= var.event_target_capacity_provider_strategy
     network_configuration {
-      subnets          = var.event_target_ecs_target_subnets
-      security_groups  = var.event_target_ecs_target_security_groups
-      assign_public_ip = var.event_target_ecs_target_assign_public_ip
+      subnets                 = var.event_target_ecs_target_subnets
+      security_groups         = var.event_target_ecs_target_security_groups
+      assign_public_ip        = var.event_target_ecs_target_assign_public_ip
     }
   }
   
-  capacity_provider_strategy = var.event_target_capacity_provider_strategy
+  
   
 }
