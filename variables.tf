@@ -139,3 +139,8 @@ variable "permissions_boundary" {
   default     = null
   type        = string
 }
+
+variable "event_target_capacity_provider_strategy" {
+  type        = object
+  default     = null
+}

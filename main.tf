@@ -84,5 +84,8 @@ resource "aws_cloudwatch_event_target" "ecs_scheduled_task" {
       security_groups  = var.event_target_ecs_target_security_groups
       assign_public_ip = var.event_target_ecs_target_assign_public_ip
     }
+
+    capacity_provider_strategy = var.event_target_capacity_provider_strategy
   }
+  
 }
